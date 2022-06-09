@@ -25,6 +25,7 @@ function jwt() {
       '/test',
       '/profile',
       '/images',
+      '/post',
     ],
   });
 }
