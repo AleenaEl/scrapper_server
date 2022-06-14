@@ -4,9 +4,9 @@ const required = createRequire(import.meta.url);
 const fs = required('fs');
 required('dotenv').config();
 
-const region = 'eu-west-2';
-const acessKeyId='AKIA5SAY4QRBZENFI45R';
-const secretAcessKey='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';
+const region = '';
+const acessKeyId='';
+const secretAcessKey='';
 
 
 const AWS = required('aws-sdk');

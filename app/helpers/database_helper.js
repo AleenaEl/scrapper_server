@@ -10,13 +10,10 @@ const connectionOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-
 const CONNECTION_URL = 'mongodb+srv://aleena:alel123@cluster0.phzomxt.mongodb.net/admin';
-
 // Agenda.connect(CONNECTION_URL).then(console.log('Scheduler running.'));
-
 connect(CONNECTION_URL, connectionOptions)
-    .then((e) => {
+    .then((_e) => {
       console.log('Connected to database');
     })
     .catch((error) => console.log(error.message));

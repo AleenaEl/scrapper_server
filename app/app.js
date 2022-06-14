@@ -17,7 +17,7 @@ app.use(cors());
 app.use(jwt());
 
 app.use('/users', userRoute);
-
+app.use('/posts', postRoute);
 app.post('/upload', uploader.single('image'), async (req, res) => {
   const file = req.file;
   try {
