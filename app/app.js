@@ -7,6 +7,7 @@ import cors from 'cors';
 import jwt from './helpers/jwt_helper.js';
 import errorHandler from './helpers/error-handler.js';
 import userRoute from './routes/users/user.routes.js';
+import postRoute from './routes/post/post.routes.js';
 const multer = required('multer');
 const uploader = multer({dest: 'uploads/'});
 
