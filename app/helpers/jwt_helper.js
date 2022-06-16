@@ -1,9 +1,9 @@
 import expressJwt from 'express-jwt';
 import {createRequire} from 'module';
+import {User} from './database_helper.js';
 const required = createRequire(import.meta.url);
 const config = required('../config/config.json');
 const _secret = config.secret;
-import {getById} from '../services/users/user.service.js';
 
 export default jwt;
 
@@ -38,7 +38,7 @@ function jwt() {
  * @return {any} response object.
 */
 async function isRevoked(req, payload, done) {
-  const user = await getById(payload.sub);
+  const user = await User.findById(payload.sub);
   if (!user) {
     return done(null, true);
   }

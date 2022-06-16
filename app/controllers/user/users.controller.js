@@ -1,32 +1,16 @@
 ﻿/* eslint-disable require-jsdoc */
-import { createRequire } from 'module';
+import {createRequire} from 'module';
 const required = createRequire(import.meta.url);
-import { User } from '../../helpers/database_helper.js';
+import {User} from '../../helpers/database_helper.js';
 import bcrypt from 'bcryptjs';
-const { compareSync } = bcrypt;
+const {compareSync} = bcrypt;
 import jsonwebtoken from 'jsonwebtoken';
-const { sign } = jsonwebtoken;
-export { getUserData };
-// {
-//           console.log('New User');
-//           console.log(req.body);
-//           const newUser = await create({
-//             'username': req.query.phoneNumber,
-//             'firstName': 'User',
-//             'lastName': req.query.phoneNumber,
-//             'phoneNumber': req.query.phoneNumber,
-//           });
-//           const token =
-//             sign({ sub: newUser.id }, config.secret, { expiresIn: '300d' });
-//           res.status(200).send({
-//             message: 'Login Sucess.',
-//             ...newUser.toJSON(),
-//             token,
-//           });
-//         }
+const {sign} = jsonwebtoken;
+export {getUserData, create};
+
 async function getUserData(req, res) {
   const id = req.query.id;
-  const user = await User.findOne({ id });
+  const user = await User.findOne({id});
   if (user) {
     console.log('User already exists');
     if (user) {
@@ -44,9 +28,9 @@ async function getUserData(req, res) {
 }
 
 /**
- * Create a new user.
- * @param {any} userParam response object.
- * @return {any} response object.
+ * Function to create a new user.
+ * @param {any} userParam object.
+ * @return {User} response object.
 */
 async function create(userParam) {
   if (await User.findOne({username: userParam.username})) {
