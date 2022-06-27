@@ -3,12 +3,12 @@ export default errorHandler;
 /**
  * Handel Errors {Validation, UnAuthorized}.
  * @param {any} err request body.
- * @param {any} req response object.
+ * @param {any} _req response object.
  * @param {any} res response object.
- * @param {any} next next object.
+ * @param {any} _next next object.
  * @return {any} response object.
 */
-function errorHandler(err, req, res, next) {
+function errorHandler(err, _req, res, _next) {
   if (typeof (err) === 'string') {
     return res.status(400).json({message: err});
   }

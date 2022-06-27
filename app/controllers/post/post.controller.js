@@ -26,11 +26,11 @@ async function addPosts(req, res) {
 
 /**
  * Handle Errors {Validation, UnAuthorized}.
- * @param {any} req response object.
+ * @param {any} _req response object.
  * @param {any} res response object.
  * @return {any} response object.
 */
-async function getPosts(req, res) {
+async function getPosts(_req, res) {
   try {
     const foundPost = await Post.find();
     res.status(200).json({
