@@ -1,9 +1,9 @@
 import expressJwt from 'express-jwt';
 import {createRequire} from 'module';
-import {User} from './database_helper.js';
 const required = createRequire(import.meta.url);
 const config = required('../config/config.json');
 const _secret = config.secret;
+import {getById} from '../services/users/user.service.js';
 
 export default jwt;
 
@@ -19,13 +19,9 @@ function jwt() {
   const secret = _secret;
   return expressJwt({secret, algorithms: ['HS256'], isRevoked}).unless({
     path: [
-      '/users/register',
+      '/users/create',
       '/users/login',
-      '/users/verify',
-      '/test',
-      '/profile',
-      '/images',
-      '/post',
+      '/users/shadow',
     ],
   });
 }
@@ -38,10 +34,9 @@ function jwt() {
  * @return {any} response object.
 */
 async function isRevoked(req, payload, done) {
-  const user = await User.findById(payload.sub);
+  const user = await getById(payload.sub);
   if (!user) {
     return done(null, true);
   }
   done();
 }
-

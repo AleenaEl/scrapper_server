@@ -1,11 +1,11 @@
-import { Banner as _Banner } from '../../helpers/database_helper.js';
+import {Banner as _Banner} from '../../helpers/database_helper.js';
 const Banner = _Banner;
 export {
-    addBanners,
-    getBanners,
-    getBannersById,
-    updateBanners,
-    deleteBanners,
+  addBanners,
+  getBanners,
+  getBannersById,
+  updateBanners,
+  deleteBanners,
 };
 /**
  * Handle Errors {Validation, UnAuthorized}.
@@ -14,13 +14,13 @@ export {
  * @return {any} response object.
 */
 async function addBanners(req, res) {
-    try {
-        const newBanner = new Banner(req.body);
-        await newBanner.save();
-        res.status(200).json(newBanner);
-    } catch (error) {
-        res.status(201).json({ error: error.message });
-    }
+  try {
+    const newBanner = new Banner(req.body);
+    await newBanner.save();
+    res.status(200).json(newBanner);
+  } catch (error) {
+    res.status(201).json({error: error.message});
+  }
 }
 
 /**
@@ -30,15 +30,15 @@ async function addBanners(req, res) {
  * @return {any} response object.
 */
 async function getBanners(req, res) {
-    try {
-        const foundBanner = await Banner.find();
-        res.status(200).json({
-            count: foundBanner.length,
-            banners: foundBanner,
-        });
-    } catch (error) {
-        res.status(201).json({ error: error.message });
-    }
+  try {
+    const foundBanner = await Banner.find();
+    res.status(200).json({
+      count: foundBanner.length,
+      banners: foundBanner,
+    });
+  } catch (error) {
+    res.status(201).json({error: error.message});
+  }
 }
 
 /**
@@ -48,13 +48,13 @@ async function getBanners(req, res) {
  * @return {any} response object.
 */
 async function getBannersById(req, res) {
-    try {
-        // get banner with id of req.params.id
-        const foundBanner = await Banner.findById(req.params.id);
-        res.status(200).json(foundBanner);
-    } catch (error) {
-        res.status(201).json({ error: error.message });
-    }
+  try {
+    // get banner with id of req.params.id
+    const foundBanner = await Banner.findById(req.params.id);
+    res.status(200).json(foundBanner);
+  } catch (error) {
+    res.status(201).json({error: error.message});
+  }
 }
 /**
  * Handle Errors {Validation, UnAuthorized}.
@@ -63,27 +63,27 @@ async function getBannersById(req, res) {
  * @return {any} response object.
 */
 async function updateBanners(req, res) {
-    try {
-        //update banner with id of req.params.id
-        const foundBanner = await Banner.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.status(200).json({
-            "message": "Banner updated successfully",
-            "banner": foundBanner,
-        });
-    } catch (error) {
-        res.status(201).json({ error: error.message });
-    }
+  try {
+    // update banner with id of req.params.id
+    const foundBanner = await Banner.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    res.status(200).json({
+      'message': 'Banner updated successfully',
+      'banner': foundBanner,
+    });
+  } catch (error) {
+    res.status(201).json({error: error.message});
+  }
 }
 
 async function deleteBanners(req, res) {
-    try {
-        //delete banner with id of req.params.id
-        const foundBanner = await Banner.findByIdAndDelete(req.params.id);
-        res.status(200).json({
-            "message": "Banner deleted successfully",
-            count: foundBanner,
-        });
-    } catch (error) {
-        res.status(201).json({ error: error.message });
-    }
+  try {
+    // delete banner with id of req.params.id
+    const foundBanner = await Banner.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      'message': 'Banner deleted successfully',
+      'count': foundBanner,
+    });
+  } catch (error) {
+    res.status(201).json({error: error.message});
+  }
 }
