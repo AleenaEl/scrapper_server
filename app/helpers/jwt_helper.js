@@ -21,19 +21,18 @@ function jwt() {
     path: [
       '/users/create',
       '/users/login',
-      '/users/shadow',
     ],
   });
 }
 
 /**
  * Check if JWT Token is revoked.
- * @param {any} req request object.
+ * @param {any} _req request object.
  * @param {any} payload parsed data from header object.
  * @param {any} done object.
  * @return {any} response object.
 */
-async function isRevoked(req, payload, done) {
+async function isRevoked(_req, payload, done) {
   const user = await getById(payload.sub);
   if (!user) {
     return done(null, true);

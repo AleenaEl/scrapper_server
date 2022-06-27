@@ -12,10 +12,25 @@ export {
   getUserData,
   createUserWithUsernameAndPassword,
   loginWithUsernameAndPassword,
-  shadowResponse,
 };
-import {create} from '../../services/users/user.service.js';
 import {ObjectId} from 'mongodb';
+
+/**
+ * Create a new user.
+ * @param {any} userParam response object.
+ * @return {any} response object.
+*/
+async function create(userParam) {
+  if (await User.findOne({username: userParam.username})) {
+    return;
+  }
+  const user = new User(userParam);
+  if (userParam.password) {
+    user.hash = bcrypt.hashSync(userParam.password, 10);
+  }
+  await user.save();
+  return user;
+}
 
 async function getUserData(req, res) {
   try {
@@ -127,12 +142,4 @@ async function loginWithUsernameAndPassword(req, res) {
 
     });
   }
-}
-
-async function shadowResponse(req, res) {
-  console.log('Shadow');
-  console.log(req.toString());
-  res.status(200).send({
-    'shadow': req.payload??'empty',
-  });
 }

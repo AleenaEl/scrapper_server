@@ -1,12 +1,12 @@
-import { Router } from 'express';
+import {Router} from 'express';
 const router = Router();
 
 import {
-    addBanners,
-    getBanners,
-    getBannersById,
-    updateBanners,
-    deleteBanners,
+  addBanners,
+  getBanners,
+  getBannersById,
+  updateBanners,
+  deleteBanners,
 } from '../../controllers/banners/banners.controller.js';
 
 router.post('/add', addBanners);
