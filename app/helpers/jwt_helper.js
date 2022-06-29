@@ -21,6 +21,7 @@ function jwt() {
     path: [
       '/users/create',
       '/users/login',
+      '/users/hello',
     ],
   });
 }
