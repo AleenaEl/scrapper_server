@@ -65,6 +65,7 @@ async function getBannersById(req, res) {
 async function updateBanners(req, res) {
   try {
     // update banner with id of req.params.id
+    // eslint-disable-next-line max-len
     const foundBanner = await Banner.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.status(200).json({
       'message': 'Banner updated successfully',
@@ -75,6 +76,7 @@ async function updateBanners(req, res) {
   }
 }
 
+// eslint-disable-next-line require-jsdoc
 async function deleteBanners(req, res) {
   try {
     // delete banner with id of req.params.id

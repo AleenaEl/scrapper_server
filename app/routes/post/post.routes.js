@@ -7,7 +7,7 @@ import {
   getPostsById,
   updatePosts,
   deletePosts,
-} from '../../controllers/banners/banners.controller.js';
+} from '../../controllers/post/post.controller.js';
 
 router.post('/add', addPosts);
 router.get('/', getPosts);
