@@ -42,7 +42,7 @@ async function addCart(req, res) {
 async function getCartById(req, res) {
   try {
     // get Cart with id of req.params.id
-    const foundCart = await Cart.find({userId: req.params.id});
+    const foundCart = await Cart.find({email: req.params.id});
     const items = [];
     for (let i = 0; i < foundCart.length; i++) {
       items.push(foundCart[i].item);
