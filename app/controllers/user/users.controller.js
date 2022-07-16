@@ -1,14 +1,22 @@
 ﻿/* eslint-disable require-jsdoc */
 // import {createRequire} from 'module';
-// const required = createRequire(import.meta.url);
+import {createRequire} from 'module';
+const required = createRequire(import.meta.url);
+const config = required('../../config/config.json');
+const _secret = config.secret;
 import {User} from '../../helpers/database_helper.js';
 import bcrypt from 'bcryptjs';
-// const {compareSync} = bcrypt;
-// import jsonwebtoken from 'jsonwebtoken';
-// const {sign} = jsonwebtoken;
+const {compareSync} = bcrypt;
+import jsonwebtoken from 'jsonwebtoken';
+const {sign} = jsonwebtoken;
 
 
-export {getUserData, create, hello};
+export {
+  getUserData,
+  hello,
+  createUserWithUsernameAndPassword,
+  loginWithUsernameAndPassword,
+};
 // {
 //           console.log('New User');
 //           console.log(req.body);
@@ -56,14 +64,83 @@ async function getUserData(req, res) {
  * @param {any} userParam object.
  * @return {User} response object.
 */
-async function create(userParam) {
-  if (await User.findOne({username: userParam.username})) {
-    return;
+
+async function createUserWithUsernameAndPassword(req, res) {
+  const {email, password}=req.body;
+  try {
+    if (email!=null&&password!=null) {
+      const user = await User.findOne({'email': email});
+      if (user) {
+        res.status(201).send({
+          'message': 'User Exists try another email or login',
+        });
+      } else {
+      // hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await User({
+          'username': email,
+          'email': email,
+          'password': hashedPassword,
+        }).save();
+        const token =
+            sign({sub: newUser.id}, _secret, {expiresIn: '300d'});
+        res.status(200).send({
+          'message': 'Sign up sucessful',
+          'success': true,
+          'user': newUser,
+          'token': token,
+        });
+      }
+    } else {
+      res.status(201).send({
+        'message': 'Invalid email or password',
+      });
+    }
+  } catch (e) {
+    res.status(500).send({
+      'message': 'Unexpected error occured',
+      'error': e.toString(),
+
+    });
   }
-  const user = new User(userParam);
-  if (userParam.password) {
-    user.hash = bcrypt.hashSync(userParam.password, 10);
+}
+
+
+async function loginWithUsernameAndPassword(req, res) {
+  const {email, password} = req.body;
+  try {
+    if (email != null && password != null) {
+      const user = await User.findOne({'email': email});
+      if (user) {
+        if (compareSync(password, user.password)) {
+          const token =
+            sign({sub: user.id}, _secret, {expiresIn: '300d'});
+          res.status(200).send({
+            'message': 'Login sucessful',
+            'success': true,
+            'user': user,
+            'token': token,
+          });
+        } else {
+          res.status(201).send({
+            'message': 'Invalid email or password',
+          });
+        }
+      } else {
+        res.status(202).send({
+          'message': 'Invalid email or password',
+        });
+      }
+    } else {
+      res.status(203).send({
+        'message': 'Invalid email or password',
+      });
+    }
+  } catch (e) {
+    res.status(500).send({
+      'message': 'Unexpected error occured',
+      'error': e.toString(),
+
+    });
   }
-  await user.save();
-  return user;
 }

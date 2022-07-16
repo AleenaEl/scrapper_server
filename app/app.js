@@ -5,7 +5,7 @@ import jwt from './helpers/jwt_helper.js';
 import errorHandler from './helpers/error-handler.js';
 import userRoute from './routes/users/user.routes.js';
 app.use(express.urlencoded({extended: true}));
-
+app.use(express.json());
 app.use(cors());
 app.use(jwt());
 app.use('/users', userRoute);

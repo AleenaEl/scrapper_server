@@ -9,7 +9,7 @@ const connectionOptions = {
   useUnifiedTopology: true,
 };
 
-const CONNECTION_URL = 'mongodb+srv://aleena:alel123@cluster0.phzomxt.mongodb.net/admin';
+const CONNECTION_URL = 'mongodb+srv://aleena:alel123@cluster0.phzomxt.mongodb.net/scrap';
 
 connect(CONNECTION_URL, connectionOptions)
     .then((_e) => {
