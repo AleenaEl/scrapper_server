@@ -44,11 +44,20 @@ async function getCartById(req, res) {
     // get Cart with id of req.params.id
     const foundCart = await Cart.find({email: req.params.id});
     const items = [];
+    const formatted = [];
     for (let i = 0; i < foundCart.length; i++) {
       items.push(foundCart[i].item);
     }
     const itemsInCart = await Post.find({'_id': {'$in': items}});
-    res.status(200).json({'items': itemsInCart, 'ids': items});
+    for (let j = 0; j < itemsInCart.length; j++) {
+      formatted.push({
+        ...itemsInCart[j]._doc,
+        ...{
+          'qty': foundCart[j].qty,
+        },
+      });
+    }
+    res.status(200).json({'items': formatted, 'ids': items});
   } catch (error) {
     res.status(201).json({error: error.message});
   }
