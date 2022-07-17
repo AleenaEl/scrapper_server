@@ -53,7 +53,7 @@ async function getCartById(req, res) {
       formatted.push({
         ...itemsInCart[j]._doc,
         ...{
-          'qty': foundCart[j].qty,
+          'qty': foundCart.find((item)=>item===itemsInCart[j]._id),
         },
       });
     }
