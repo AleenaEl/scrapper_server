@@ -4,6 +4,7 @@ import User from '../model/users/user.model.js';
 import Banner from '../model/banners/banner.model.js';
 import Post from '../model/post/post.model.js';
 import Cart from '../model/cart/cart.model.js';
+import Pickup from '../model/pickup/pickup.model.js';
 const connectionOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -17,4 +18,4 @@ connect(CONNECTION_URL, connectionOptions)
     })
     .catch((error) => console.log(error.message));
 
-export {User, Banner, Post, Cart};
+export {User, Banner, Post, Cart, Pickup};
